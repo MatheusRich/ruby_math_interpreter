@@ -58,19 +58,19 @@ RSpec.shared_examples "a math interpreter" do
     end
   end
 
-  # describe "floating point numbers" do
-  #   it "evaluates floating point numbers" do
-  #     expect(subject.call("1.5")).to eq(1.5)
-  #     expect(subject.call("2.5 + 3.5")).to eq(6.0)
-  #     expect(subject.call("5 / 2.0")).to eq(2.5)
-  #   end
+  describe "floating point numbers" do
+    it "evaluates floating point numbers" do
+      expect(subject.call("1.5")).to eq(1.5)
+      expect(subject.call("2.5 + 3.5")).to eq(6.0)
+      expect(subject.call("5 / 2.0")).to eq(2.5)
+    end
 
-  #   context "when the input contains a decimal point without digits" do
-  #     it "raises an error" do
-  #       expect { subject.call("1.") }.to raise_error(/Invalid number/)
-  #     end
-  #   end
-  # end
+    context "when the input contains a decimal point without digits" do
+      it "raises an error" do
+        expect { subject.call("1.") }.to raise_error(/Invalid number/)
+      end
+    end
+  end
 
   # describe "constants" do
   #   it "evaluates constants" do

@@ -84,9 +84,21 @@ module RubyMathInterpreter
     end
 
     def number
-      token = advance
+      number = advance.to_i
 
-      {type: :number, value: token.to_i}
+      if matches?(".")
+        advance # consume "."
+        if matches?(/\d/)
+          decimal_digits = advance
+          decimal_part = decimal_digits.to_f / (10**decimal_digits.length)
+
+          number += decimal_part
+        else
+          raise "Invalid number"
+        end
+      end
+
+      {type: :number, value: number}
     end
 
     private
