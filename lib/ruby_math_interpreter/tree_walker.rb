@@ -15,14 +15,25 @@ module RubyMathInterpreter
       in :number
         ast[:value]
       in :unary
-        right = interpret(ast[:right])
-        right.send(:"#{ast[:operator]}@")
+        case ast[:operator]
+        in "-"
+          right = interpret(ast[:right])
+          right.send(:"#{ast[:operator]}@")
+        in "!"
+          right = interpret(ast[:right])
+          factorial(right)
+        end
       in :binary
         left = interpret(ast[:left])
         right = interpret(ast[:right])
 
         left.send(ast[:operator], right)
       end
+    end
+
+    private_class_method def self.factorial(n)
+      return 1 if n <= 1
+      n * factorial(n - 1)
     end
   end
 end

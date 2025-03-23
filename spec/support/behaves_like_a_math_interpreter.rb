@@ -43,20 +43,20 @@ RSpec.shared_examples "a math interpreter" do
     end
   end
 
-  # describe "postfix expressions" do
-  #   it "evaluates postfix expressions" do
-  #     expect(subject.call("5!")).to eq(120)
-  #     expect(subject.call("(5)!")).to eq(120)
-  #   end
+  describe "postfix expressions" do
+    it "evaluates postfix expressions" do
+      expect(subject.call("5!")).to eq(120)
+      expect(subject.call("(5)!")).to eq(120)
+    end
 
-  #   it "allows composing postfix expressions" do
-  #     expect(subject.call("3!!")).to eq(720)
-  #   end
+    it "allows composing postfix expressions" do
+      expect(subject.call("3!!")).to eq(720)
+    end
 
-  #   it "handles precedence correctly" do
-  #     expect(subject.call("2 + -3!")).to eq(-4)
-  #   end
-  # end
+    it "handles precedence correctly" do
+      expect(subject.call("2 + -3!")).to eq(-4)
+    end
+  end
 
   # describe "floating point numbers" do
   #   it "evaluates floating point numbers" do

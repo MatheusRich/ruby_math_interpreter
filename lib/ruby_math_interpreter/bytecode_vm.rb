@@ -7,8 +7,14 @@ module RubyMathInterpreter
       in :number
         instructions += [[:putobject, ast[:value]]]
       in :unary
-        instructions += call(ast[:right])
-        instructions += [[:sendself, ast[:operator]]]
+        case ast[:operator]
+        in "-"
+          instructions += call(ast[:right])
+          instructions += [[:sendself, ast[:operator]]]
+        in "!"
+          instructions += call(ast[:right])
+          instructions += [[:factorial]]
+        end
       in :binary
         instructions += call(ast[:left])
         instructions += call(ast[:right])
@@ -36,10 +42,19 @@ module RubyMathInterpreter
           left = stack.pop
           result = left.send(operator, right)
           stack.push(result)
+        in [:factorial]
+          value = stack.pop
+          result = factorial(value)
+          stack.push(result)
         end
       end
 
       stack.pop
+    end
+
+    private_class_method def self.factorial(n)
+      return 1 if n <= 1
+      n * factorial(n - 1)
     end
   end
 

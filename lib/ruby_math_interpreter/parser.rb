@@ -49,8 +49,19 @@ module RubyMathInterpreter
 
         {type: :unary, operator:, right:}
       else
-        primary
+        postfix
       end
+    end
+
+    def postfix
+      expr = primary
+
+      while matches?("!")
+        operator = advance
+        expr = {type: :unary, operator:, right: expr}
+      end
+
+      expr
     end
 
     def primary
