@@ -72,12 +72,13 @@ RSpec.shared_examples "a math interpreter" do
     end
   end
 
-  # describe "constants" do
-  #   it "evaluates constants" do
-  #     expect(subject.call("pi")).to eq(Math::PI)
-  #     expect(subject.call("e")).to eq(Math::E)
-  #   end
-  # end
+  describe "constants" do
+    it "evaluates constants" do
+      expect(subject.call("pi")).to eq(Math::PI)
+      expect(subject.call("e")).to eq(Math::E)
+      expect(subject.call("pi * 2")).to eq(Math::PI * 2)
+    end
+  end
 
   # describe "application" do
   #   it "reduces the range using the given operator" do

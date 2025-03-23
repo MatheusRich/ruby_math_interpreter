@@ -1,5 +1,10 @@
 module RubyMathInterpreter
   class Parser
+    KEYWORDS = {
+      "pi" => Math::PI,
+      "e" => Math::E,
+    }.freeze
+
     def self.call(tokens)
       new(tokens).call
     end
@@ -69,6 +74,8 @@ module RubyMathInterpreter
         grouping
       elsif matches?(/\d/)
         number
+      elsif keyword?
+        keyword
       elsif at_end?
         raise "EOF"
       else
@@ -101,6 +108,12 @@ module RubyMathInterpreter
       {type: :number, value: number}
     end
 
+    def keyword
+      value = KEYWORDS[advance]
+
+      {type: :number, value:}
+    end
+
     private
 
     def matches?(*types)
@@ -118,5 +131,7 @@ module RubyMathInterpreter
     def at_end? = @tokens.empty?
 
     def peek = @tokens.first
+
+    def keyword? = KEYWORDS[peek]
   end
 end
