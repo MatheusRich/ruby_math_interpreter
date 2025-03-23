@@ -30,16 +30,27 @@ module RubyMathInterpreter
     end
 
     def factor
-      expr = primary
+      expr = unary
 
       while matches?("*", "/")
         operator = advance
-        expr2 = primary
+        expr2 = unary
 
         expr = {type: :binary, operator:, left: expr, right: expr2}
       end
 
       expr
+    end
+
+    def unary
+      if matches?("-")
+        operator = advance
+        right = unary
+
+        {type: :unary, operator:, right:}
+      else
+        primary
+      end
     end
 
     def primary

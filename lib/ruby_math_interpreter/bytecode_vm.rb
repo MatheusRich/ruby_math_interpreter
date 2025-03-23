@@ -6,6 +6,9 @@ module RubyMathInterpreter
       case ast[:type]
       in :number
         instructions += [[:putobject, ast[:value]]]
+      in :unary
+        instructions += call(ast[:right])
+        instructions += [[:sendself, ast[:operator]]]
       in :binary
         instructions += call(ast[:left])
         instructions += call(ast[:right])
@@ -24,6 +27,10 @@ module RubyMathInterpreter
         case instruction
         in [:putobject, value]
           stack.push(value)
+        in [:sendself, operator]
+          right = stack.pop
+          result = right.send(:"#{operator}@")
+          stack.push(result)
         in [:send, operator]
           right = stack.pop
           left = stack.pop

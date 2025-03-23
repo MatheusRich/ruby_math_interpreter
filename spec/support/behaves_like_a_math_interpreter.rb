@@ -33,15 +33,15 @@ RSpec.shared_examples "a math interpreter" do
     end
   end
 
-  # describe "unary expressions" do
-  #   it "evaluates unary expressions" do
-  #     expect(subject.call("-1")).to eq(-1)
-  #   end
+  describe "unary expressions" do
+    it "evaluates unary expressions" do
+      expect(subject.call("-1")).to eq(-1)
+    end
 
-  #   it "allows composing unary expressions" do
-  #     expect(subject.call("--2")).to eq(2)
-  #   end
-  # end
+    it "allows composing unary expressions" do
+      expect(subject.call("--2")).to eq(2)
+    end
+  end
 
   # describe "postfix expressions" do
   #   it "evaluates postfix expressions" do

@@ -14,6 +14,9 @@ module RubyMathInterpreter
       case ast[:type]
       in :number
         ast[:value]
+      in :unary
+        right = interpret(ast[:right])
+        right.send(:"#{ast[:operator]}@")
       in :binary
         left = interpret(ast[:left])
         right = interpret(ast[:right])
