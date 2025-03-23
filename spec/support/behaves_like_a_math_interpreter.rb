@@ -8,17 +8,17 @@ RSpec.shared_examples "a math interpreter" do
       expect(subject.call("1 - 2")).to eq(-1)
     end
 
-    # it "evaluates multiplication" do
-    #   expect(subject.call("2 * 3")).to eq(6)
-    # end
+    it "evaluates multiplication" do
+      expect(subject.call("2 * 3")).to eq(6)
+    end
 
-    # it "evaluates division" do
-    #   expect(subject.call("8 / 3")).to eq(2) #  # Integer division
-    # end
+    it "evaluates division" do
+      expect(subject.call("8 / 3")).to eq(2) #  # Integer division
+    end
 
-    # it "respects operator precedence" do
-    #   expect(subject.call("1 + 2 * 3 - 4 / 2")).to eq(5)
-    # end
+    it "respects operator precedence" do
+      expect(subject.call("1 + 2 * 3 - 4 / 2")).to eq(5)
+    end
   end
 
   # describe "grouping" do

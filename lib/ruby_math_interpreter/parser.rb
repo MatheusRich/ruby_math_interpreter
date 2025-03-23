@@ -17,9 +17,22 @@ module RubyMathInterpreter
     end
 
     def term
-      expr = number
+      expr = factor
 
       while matches?("+", "-")
+        operator = advance
+        expr2 = factor
+
+        expr = {type: :binary, operator:, left: expr, right: expr2}
+      end
+
+      expr
+    end
+
+    def factor
+      expr = number
+
+      while matches?("*", "/")
         operator = advance
         expr2 = number
 
