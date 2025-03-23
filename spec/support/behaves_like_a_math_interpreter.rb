@@ -21,17 +21,17 @@ RSpec.shared_examples "a math interpreter" do
     end
   end
 
-  # describe "grouping" do
-  #   it "evaluates grouped expressions first" do
-  #     expect(subject.call("(1 + 2) * 3")).to eq(9)
-  #   end
+  describe "grouping" do
+    it "evaluates grouped expressions first" do
+      expect(subject.call("(1 + 2) * 3")).to eq(9)
+    end
 
-  #   context "when parentheses are not closed" do
-  #     it "raises an error" do
-  #       expect { subject.call("(1 + 2") }.to raise_error(/Expected a closing parenthesis/)
-  #     end
-  #   end
-  # end
+    context "when parentheses are not closed" do
+      it "raises an error" do
+        expect { subject.call("(1 + 2") }.to raise_error(/Expected a closing parenthesis/)
+      end
+    end
+  end
 
   # describe "unary expressions" do
   #   it "evaluates unary expressions" do

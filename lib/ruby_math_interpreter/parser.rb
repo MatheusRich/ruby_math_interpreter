@@ -30,11 +30,11 @@ module RubyMathInterpreter
     end
 
     def factor
-      expr = number
+      expr = primary
 
       while matches?("*", "/")
         operator = advance
-        expr2 = number
+        expr2 = primary
 
         expr = {type: :binary, operator:, left: expr, right: expr2}
       end
@@ -42,12 +42,27 @@ module RubyMathInterpreter
       expr
     end
 
+    def primary
+      if matches?("(")
+        grouping
+      elsif matches?(/\d/)
+        number
+      elsif at_end?
+        raise "EOF"
+      else
+        raise "Expected an expression, got '#{peek}'"
+      end
+    end
+
+    def grouping
+      advance # consume "("
+      expr = program # recursively parse a new expression
+      expect(")", "Expected a closing parenthesis")
+      expr
+    end
+
     def number
       token = advance
-      raise "EOF" if token.nil?
-      if !token.match?(/\d/)
-        raise "Expected an expression, got '#{token}'"
-      end
 
       {type: :number, value: token.to_i}
     end
@@ -55,11 +70,19 @@ module RubyMathInterpreter
     private
 
     def matches?(*types)
-      types.any? { it === @tokens.first }
+      types.any? { it === peek }
     end
 
-    def advance
-      @tokens.shift
+    def advance = @tokens.shift
+
+    def expect(type, msg)
+      return advance if matches?(type)
+
+      raise msg
     end
+
+    def at_end? = @tokens.empty?
+
+    def peek = @tokens.first
   end
 end
