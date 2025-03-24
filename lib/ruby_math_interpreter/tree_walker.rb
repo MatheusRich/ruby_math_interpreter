@@ -28,6 +28,16 @@ module RubyMathInterpreter
         right = interpret(ast[:right])
 
         left.send(ast[:operator], right)
+      in :application
+        ast => {operator:, from:, to:}
+        from_value = interpret(from)
+        raise "Invalid range" if from_value.is_a? Float
+
+        to_value = interpret(to)
+        raise "Invalid range" if to_value.is_a? Float
+
+        by = to_value < from_value ? -1 : 1
+        from_value.step(to_value, by).reduce(operator)
       end
     end
 

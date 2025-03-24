@@ -76,6 +76,8 @@ module RubyMathInterpreter
         number
       elsif keyword?
         keyword
+      elsif matches?("apply")
+        application
       elsif at_end?
         raise "EOF"
       else
@@ -112,6 +114,24 @@ module RubyMathInterpreter
       value = KEYWORDS[advance]
 
       {type: :number, value:}
+    end
+
+    # apply(+ from 1 to 4) => 1 + 2 + 3 + 4
+    def application
+      advance # consume "apply"
+      expect("(", "Expected a '(' after 'apply'")
+
+      if !matches?("+", "-", "*", "/")
+        raise "Invalid operator '#{peek}'"
+      end
+      operator = advance
+      expect("from", "Expected 'from' after operator")
+      from = program
+      expect("to", "Expected 'to' after 'from'")
+      to = program
+      expect(")", "Expected a ')' to close the application")
+
+      {type: :application, operator:, from:, to:}
     end
 
     private

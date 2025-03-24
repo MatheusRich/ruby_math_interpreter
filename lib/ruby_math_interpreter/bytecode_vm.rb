@@ -19,6 +19,12 @@ module RubyMathInterpreter
         instructions += call(ast[:left])
         instructions += call(ast[:right])
         instructions += [[:send, ast[:operator]]]
+      in :application
+        ast => {operator:, from:, to:}
+        instructions += call(from)
+        instructions += call(to)
+        instructions += [[:putobject, operator]]
+        instructions += [[:apply]]
       end
 
       instructions
@@ -45,6 +51,15 @@ module RubyMathInterpreter
         in [:factorial]
           value = stack.pop
           result = factorial(value)
+          stack.push(result)
+        in [:apply]
+          operator = stack.pop
+          to = stack.pop
+          from = stack.pop
+          raise "Invalid range" if from.is_a?(Float) || to.is_a?(Float)
+
+          by = to < from ? -1 : 1
+          result = from.step(to:, by:).reduce(operator)
           stack.push(result)
         end
       end
